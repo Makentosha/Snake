@@ -32,3 +32,14 @@ body {
 	background-size: contain;
 	background-repeat: no-repeat;
 }
+
+#lost {
+	display: block;
+	position: fixed;
+	top: 200;
+	left: 150;
+}
+
+#lost > p {
+	font-size: 30px;
+}

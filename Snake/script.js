@@ -9,8 +9,14 @@ let speed = 100;
 start();
 
 function start() {
-
-	$("body").empty();
+	$(".point").remove();
+	x = 10;
+	points = 4;
+	positionZ = 50;
+	positionX = 0;
+	directionX = 0;
+	directionY = 10;
+	speed = 100;
 	spawnTarget();
 	for (let i = 0; i < 5; i++) {
 		let point = document.createElement("div");
@@ -21,7 +27,6 @@ function start() {
 		point.style.left = 100 + "px";
 		if (i == 4) {
 			point.style.backgroundColor = 'orange';
-			console.log(point)
 		}
 		$("body").append(point);
 	}
@@ -36,45 +41,39 @@ function start() {
 			|| $(".point")[points].style.left.substring(0, $(".point")[points].style.left.length - 2) >= 590
 			|| $(".point")[points].style.top.substring(0, $(".point")[points].style.top.length - 2) < 10
 			|| $(".point")[points].style.left.substring(0, $(".point")[points].style.left.length - 2) < 10) {
-			console.log(move)
 			clearInterval(move);
-			console.log('You have crashed')
 		}
 		if($(".point")[points].style.top == document.getElementById("target").style.top && $(".point")[points].style.left == document.getElementById("target").style.left) {
 			spawnTarget();
 		}
-	},100);
-	$("body").keyup(function(e) {
-		console.log(e)
-		if(e.which == 68) {
-			directionX = 10;
-			directionY = 0;
-		}
-		if(e.which == 87) {
-			directionY = -10;
-			directionX= 0;
-		}
-		if(e.which == 83) {
-			directionY = 10;
-			directionX = 0;
-		}
-		if(e.which == 65) {
-			directionX = -10;
-			directionY = 0;
-		}
-		if(e.which == 82){
-			clearInterval(move);
-			x = 10;
-			points = 4;
-			positionZ = 50;
-			positionX = 0;
-			directionX = 0;
-			directionY = 10;
-			speed = 100;
-			start();
-		}
-		console.log(e.which);
-	})
+		$("body").keyup(function(e) {
+			if(e.which == 68 || e.which == 39) {
+				if (directionX != -10) {
+					directionX = 10;
+					directionY = 0;
+				}
+			}
+			if(e.which == 87 || e.which == 38) {
+				if(directionY != 10) {
+					directionY = -10;
+					directionX= 0;
+				}
+			}
+			if(e.which == 83 || e.which == 40) {
+				if (directionY != -10) {
+					directionY = +10;
+					directionX = 0;
+				}
+			}
+			if(e.which == 65 || e.which == 37) {
+				if (directionX != 10) {
+					directionX = -10;
+					directionY = 0;
+				}
+			}
+		});
+		console.log("frame");
+	},200);
 }
 
 
