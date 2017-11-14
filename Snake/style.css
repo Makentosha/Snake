@@ -13,6 +13,7 @@ body {
 	margin: 0;	
 	background-color: green;
 	border: 1px solid gray;
+	z-index: 1;
 }
 
 .point2 {
@@ -34,12 +35,14 @@ body {
 }
 
 #lost {
-	display: block;
+	display: none;
 	position: fixed;
 	top: 200;
 	left: 150;
+	z-index: 2;
 }
 
 #lost > p {
+	z-index: 2;
 	font-size: 30px;
 }

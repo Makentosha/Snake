@@ -9,6 +9,7 @@ let speed = 100;
 start();
 
 function start() {
+	document.querySelector("#lost").style.display = "none";
 	$(".point").remove();
 	x = 10;
 	points = 4;
@@ -42,6 +43,8 @@ function start() {
 			|| $(".point")[points].style.top.substring(0, $(".point")[points].style.top.length - 2) < 10
 			|| $(".point")[points].style.left.substring(0, $(".point")[points].style.left.length - 2) < 10) {
 			clearInterval(move);
+			document.querySelector("#lost").style.display = "block";
+
 		}
 		if($(".point")[points].style.top == document.getElementById("target").style.top && $(".point")[points].style.left == document.getElementById("target").style.left) {
 			spawnTarget();
@@ -73,7 +76,7 @@ function start() {
 			}
 		});
 		console.log("frame");
-	},200);
+	},30);
 }
 
 
