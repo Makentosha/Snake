@@ -88,7 +88,7 @@ function start() {
 				}
 			}
 		});
-	},50);
+	},80);
 }
 
 function checkPosition() {
