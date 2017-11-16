@@ -1,5 +1,5 @@
 let x = 10;
-let points = 15;
+let points = 5;
 let positionZ = 50;
 let positionX = 0;
 let directionX = 0;
@@ -14,7 +14,7 @@ function start() {
 	document.querySelector("#lost").style.display = "none";
 	$(".point").remove();
 	x = 10;
-	points = 15;
+	points = 5;
 	positionZ = 50;
 	positionX = 0;
 	directionX = 0;
