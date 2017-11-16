@@ -4,11 +4,13 @@ let positionZ = 50;
 let positionX = 0;
 let directionX = 0;
 let directionY = 10;
-let speed = 100;
+let currentScore = 0;
+let bestScore = 0;
 
 start();
 
 function start() {
+	document.querySelector("#lost").style.display = "none";
 	$(".point").remove();
 	x = 10;
 	points = 4;
@@ -16,16 +18,15 @@ function start() {
 	positionX = 0;
 	directionX = 0;
 	directionY = 10;
-	speed = 100;
 	spawnTarget();
-	for (let i = 0; i < 5; i++) {
+	for (let i = 0; i <= points; i++) {
 		let point = document.createElement("div");
 		point.className = "point";
 		point.id = i;
 		point.style.position = "fixed";
 		point.style.top = i * 10 + 10 + "px";
 		point.style.left = 100 + "px";
-		if (i == 4) {
+		if (i == points) {
 			point.style.backgroundColor = 'orange';
 		}
 		$("body").append(point);
@@ -37,14 +38,27 @@ function start() {
 		}
 		$(".point")[points].style.top = +$(".point")[points].style.top.substring(0, $(".point")[points].style.top.length - 2) + directionY + "px";
 		$(".point")[points].style.left = +$(".point")[points].style.left.substring(0, $(".point")[points].style.left.length - 2) + directionX + "px";
-		if ($(".point")[points].style.top.substring(0, $(".point")[points].style.top.length - 2) >= 590
-			|| $(".point")[points].style.left.substring(0, $(".point")[points].style.left.length - 2) >= 590
+
+		if ($(".point")[points].style.top.substring(0, $(".point")[points].style.top.length - 2) >= 310
+			|| $(".point")[points].style.left.substring(0, $(".point")[points].style.left.length - 2) >= 310
 			|| $(".point")[points].style.top.substring(0, $(".point")[points].style.top.length - 2) < 10
-			|| $(".point")[points].style.left.substring(0, $(".point")[points].style.left.length - 2) < 10) {
+			|| $(".point")[points].style.left.substring(0, $(".point")[points].style.left.length - 2) < 10
+			|| checkPosition()) {
 			clearInterval(move);
+			document.querySelector("#lost").style.display = "block";
+			console.log("cs " + currentScore);
+			console.log("bs " + bestScore);
+			if (bestScore < currentScore) {
+				bestScore = currentScore;
+				document.querySelector("#bestScore").innerHTML = "Best Score: " + bestScore;
+			}
+			currentScore = 0;
+			document.querySelector("#currentScore").innerHTML = "Current Score: " + currentScore;
 		}
+		
 		if($(".point")[points].style.top == document.getElementById("target").style.top && $(".point")[points].style.left == document.getElementById("target").style.left) {
 			spawnTarget();
+			increseLength();
 		}
 		$("body").keyup(function(e) {
 			if(e.which == 68 || e.which == 39) {
@@ -72,18 +86,42 @@ function start() {
 				}
 			}
 		});
-		console.log("frame");
-	},200);
+	},75);
 }
 
-
+function checkPosition() {
+	let head = document.getElementById(4).style;
+	console.log(document.getElementById(points).style);
+	for (let i = 0; i < points - 1; i++) {
+		let point = document.getElementById(i).style;
+		if (i != 4 && point.left == head.left && point.top == head.top) {
+			console.log("point.left: " + point.left);
+			console.log("head.left: " + head.left);
+			console.log("point.top: " + point.top);
+			console.log("head.top: " + head.top);
+			return (true);
+		}
+	}
+}
 
 function spawnTarget() {
-	speed = 10;
 	$("#target").remove();
 	let target = document.createElement("div");
 	target.id = "target";
-	target.style.top = Math.floor(Math.random() * 59) * 10 + "px";
-	target.style.left = Math.floor(Math.random() * 59) * 10 + "px";
+	target.style.top = Math.floor(Math.random() * 29) * 10 + 10 + "px";
+	target.style.left = Math.floor(Math.random() * 29) * 10 + 10 + "px";
 	$("body").append(target);
+}
+
+function increseLength() {
+	points++;
+	let point = document.createElement("div");
+	point.className = "point";
+	point.style.position = "fixed";
+	point.id = points;
+	point.style.top = "30px;"
+	point.style.left = "30px;"
+	$("body").prepend(point);
+	currentScore++;
+	document.querySelector("#currentScore").innerHTML = "Current Score: " + currentScore;
 }
